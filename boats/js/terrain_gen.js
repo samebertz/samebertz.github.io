@@ -1,33 +1,5 @@
-// let max = 0, min = 1
-
-function draw_surface(ctx, surface) {
-  let c = ctx.canvas
-  let water,
-      height,
-      size = surface.length,
-      bound_size = 256,
-      cell_size = bound_size / size,
-      cell_loc = {},
-      bound = {
-        x: (((c.width - 2) / 2) - (bound_size / 2) + (cell_size / 2) + 1),
-        y: (((c.height - 2) / 2) - (bound_size / 2) + (cell_size / 2) + 1)
-      }
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
-      height = surface[i][j]
-      if (height === undefined) continue
-      if (height > max) max = height
-      if (height < min) min = height
-      let rgb_triple = height < .4 ? '0,0,255' : Math.floor(height*250) + ',' + Math.floor(height*250) + ',' + Math.floor(height*250)
-      ctx.fillStyle = 'rgba(' + rgb_triple + ',.4)'
-      cell_loc.x = bound.x + (i * cell_size)
-      cell_loc.y = bound.y + (j * cell_size)
-      ctx.fillRect(cell_loc.x - (cell_size / 2) - 0.01, cell_loc.y - (cell_size / 2) - 0.01, cell_size + 0.02, cell_size + 0.02)
-    }
-  }
-  // document.getElementById('max').textContent = 'max: ' + max.toString().substring(0, 4)
-  // document.getElementById('min').textContent = 'min: ' + min.toString().substring(0, 4)
-}
+//ES6 Modules import
+import { log_surface } from terrain_log.js
 
 // The actual magic mathiness...
 // Something here is probably wrong though, because it's rendering 17 (iterations^2+1) squares...
@@ -141,14 +113,5 @@ function generate_surface(iterations) {
   return surface
 }
 
-function log_surface(surface) {
-  surface.forEach(row => {
-    //console.log(row);
-    console.log(row.reduce((acc, cell) =>
-      acc + cell.toString().substring(0, 3) + '\t',
-    ''))
-  })
-}
-
 // ES6 Modules export
-export { draw_surface, generate_surface, log_surface }
+export { generate_surface }
