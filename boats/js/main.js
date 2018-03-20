@@ -1,3 +1,4 @@
+// ES6 Modules import
 import * as terrain from './terrain.js'
 
 window.onload = () => {
